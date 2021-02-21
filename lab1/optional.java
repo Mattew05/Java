@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Main {
 
-    static int checkConnected(int n,int matrix[][]){//facem un bfs si vedem daca viziteaza toate nodurile la final
+    static int checkConnected(int n, int[][] matrix){//facem un bfs si vedem daca viziteaza toate nodurile la final
         boolean[] visited=new boolean[n];
         for(int i=0;i<n;i++)visited[i]=false;
         LinkedList<Integer> queue = new LinkedList<Integer>();
@@ -12,32 +12,40 @@ public class Main {
         while(queue.size()>0){
             int x=queue.poll();
             visited[x]=true;
-            for(int i=0;i<n;i++)if(matrix[x][i]==1&& !visited[i])queue.add(i);
+            for(int i=0;i<n;i++)
+                if(matrix[x][i]==1&& !visited[i])
+                    queue.add(i);
         }
-        for(int i=0;i<n;i++)if(!visited[i])return 0;
+        for(int i=0;i<n;i++)
+            if(!visited[i])
+                return 0;
         return 1;
     }
 
-    static void connectedComponents(int n,int matrix[][]){//tot cu bfs
+    static void connectedComponents(int n, int[][] matrix){//tot cu bfs
         boolean[] visited=new boolean[n];
-        for(int i=0;i<n;i++)visited[i]=false;
+        for(int i=0;i<n;i++)
+            visited[i]=false;
+
         LinkedList<Integer> queue = new LinkedList<Integer>();
-        for(int i=0;i<n&&!visited[i];i++) {
-            System.out.print(i);
+
+        for(int i=0;i<n&&!visited[i];i++)//face un bfs pe fiecare nod din graf
+        {
+            System.out.print(i);//afiseaza mereu primul nod de unde incepe parcurgerea
             queue.add(i);
             while (queue.size() > 0) {
                 int x = queue.poll();
                 visited[x] = true;
                 for (int j = 0; j < n; j++) if (matrix[x][j] == 1 && !visited[j]){
                     queue.add(j);
-                    System.out.print(j);
-                }
+                    System.out.print(j);//afiseaza vecinii care ii viziteaza
+                }//mere bine numa cand vrea el
             }
             System.out.print("\n");
         }
     }
 
-    static void treeGenerator(int n,int matrix[][]){//facem parcurgerea bfs si gasim nodurile
+    static void treeGenerator(int n, int[][] matrix){//facem parcurgerea bfs si gasim nodurile
         boolean[] visited=new boolean[n];
         for(int i=0;i<n;i++)visited[i]=false;
         int[][] treeMatrix=new int[n][n];
@@ -82,7 +90,7 @@ public class Main {
         }
         if(checkConnected(n,matrix)==1) {System.out.println("It is connected.");treeGenerator(n,matrix);}//am pus aici fiindca matricea se genereaza random
         else {
-            System.out.println("\nIt ain't connected\n");
+            System.out.print("It ain't connected\n");
             connectedComponents(n,matrix);
         }
     }

@@ -36,10 +36,12 @@ public class Main {
             while (queue.size() > 0) {
                 int x = queue.poll();
                 visited[x] = true;
-                for (int j = 0; j < n; j++) if (matrix[x][j] == 1 && !visited[j]){
-                    queue.add(j);
-                    System.out.print(j);//afiseaza vecinii care ii viziteaza
-                }//mere bine numa cand vrea el
+                for (int j = 0; j < n; j++)
+                    if (matrix[x][j] == 1 && !visited[j])
+                    {
+                        queue.add(j);
+                        System.out.print(j);
+                    }//mere bine numa cand vrea el
             }
             System.out.print("\n");
         }
@@ -61,7 +63,8 @@ public class Main {
                 if(matrix[x][i]==1&& !visited[i])
             {
                 queue.add(i);
-                treeMatrix[x][i]=1;
+                treeMatrix[x][i]=1;//aici tinem minte conexiunea dintre nodurile vecine
+                treeMatrix[i][x]=1;
             }
         }
         System.out.print("\n");//lasam sa fie pe o linie noua sa arate mai frumos afisarile

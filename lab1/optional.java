@@ -23,26 +23,33 @@ public class Main {
     }
 
     static void connectedComponents(int n, int[][] matrix){//tot cu bfs
-        boolean[] visited=new boolean[n];
+        int[] visited=new int[n];
         for(int i=0;i<n;i++)
-            visited[i]=false;
+            visited[i]=0;
 
         LinkedList<Integer> queue = new LinkedList<Integer>();
 
-        for(int i=0;i<n&&!visited[i];i++)//face un bfs pe fiecare nod din graf
+        int color=1;//colorare vector vizitat
+
+        for(int i=0;i<n;i++)//face un bfs pe fiecare nod din graf
         {
-            System.out.print(i);//afiseaza mereu primul nod de unde incepe parcurgerea
-            queue.add(i);
-            while (queue.size() > 0) {
-                int x = queue.poll();
-                visited[x] = true;
-                for (int j = 0; j < n; j++)
-                    if (matrix[x][j] == 1 && !visited[j])
-                    {
-                        queue.add(j);
-                        System.out.print(j);
-                    }//mere bine numa cand vrea el
+            if (visited[i] == 0) {
+                visited[i] = color;
+                queue.add(i);
+                while (queue.size() > 0) {
+                    int x = queue.poll();
+                    visited[x] = color;
+                    for (int j = 0; j < n; j++)
+                        if (visited[j] == 0 && matrix[x][j] == 1) {
+                            queue.add(j);
+                        }
+                }
+                color++;
             }
+        }
+        for(int i=1;i<color;i++)
+        {
+            for (int j = 0; j < n; j++) if(visited[j]==i) System.out.print(j);
             System.out.print("\n");
         }
     }
@@ -91,6 +98,7 @@ public class Main {
             for(int j=0;j<n;j++) System.out.print(matrix[i][j]);
             System.out.print("\n");
         }
+
         if(checkConnected(n,matrix)==1) {System.out.println("It is connected.");treeGenerator(n,matrix);}//am pus aici fiindca matricea se genereaza random
         else {
             System.out.print("It ain't connected\n");
